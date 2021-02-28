@@ -18,19 +18,18 @@ async function main (){
     
     //Añadimos un nivel al héroe
     if(Bard.data.data.levels=1){
-        await Bard.update({"data.levels":Bard.data.data.levels+1})
+        await Bard.update({"data.levels":Bard.data.data.levels+1})        
+    }
+    else{
+        ui.notifications.error("Kalna no está a nivel 1");
+        return;
     }
     //Checked => esto funciona
-    //Falta por añadir error si no está a nivel 1. ¿Dentro del IF?
-          
+             
     
     //Añadimos un espacio de conjuro por estar a nivel 2. Sirve para Bardos, Clérigos, Druidas y Magos.
-    
-    let nuevoRecursomax=actor.data.data.resources.primary.max +1
-    actor.update({"data.resources.primary.max": nuevoRecursomax});
-    let nuevoRecurso=actor.data.data.resources.primary.value +1
-    actor.update({"data.resources.primary.value": nuevoRecurso});
-    //Checked => esto funciona  
+    spellcasters1_2(actor);
+    //Checked => esto funciona
    
             
     //Eliminamos items que se añaden automáticamente a la classe y que sobran. 
@@ -58,11 +57,21 @@ async function main (){
     }
     //Checked => esto funciona
     
-
+    //añadir cosas
+    let ceguera=game.items.find(item=>item.data.name=="Ceguera")
+    console.log(ceguera)
+    actor.createOwnedItem({ceguera})
 
 
     //Una vez se ha hecho todo, informamos de la subida de nivel
     ui.notifications.info(`${actor.data.name} ha subido de nivel`)    
     //Checked => esto funciona
    
+}
+
+function spellcasters1_2(actor) {
+    let nuevoRecursomax = actor.data.data.resources.primary.max = 3;
+    actor.update({ "data.resources.primary.max": nuevoRecursomax });
+    let nuevoRecurso = actor.data.data.resources.primary.value + 1;
+    actor.update({ "data.resources.primary.value": nuevoRecurso });
 }
